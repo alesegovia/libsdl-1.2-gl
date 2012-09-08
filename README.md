@@ -46,6 +46,8 @@ int main(int argc, char* argv[])
 
 	printf("GL Version:%s\n", glGetString(GL_VERSION));
 
+	SDL_Quit();
+
 	return 0;
 }
 ```
