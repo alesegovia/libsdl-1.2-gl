@@ -1,16 +1,16 @@
 libsdl-1.2-gl
 =============
 
-A fork of the libsdl-1.2.15 library that adds support for creating OpenGL Core Profile contexts on OS X.
+A fork of libsdl-1.2.15 that adds support for creating OpenGL Core Profile contexts on OSX.
 
 Rationale
 =========
 
-Mac OS X 10.8 (Mountain Lion) implements OpenGL 3.2 core profile. The way to access these features, however, is by creating a forward-compatible-only OpenGL Context when the application starts.
+Mac OS X 10.8 (Mountain Lion) implements the OpenGL 3.2 Core profile. The way to access this feature, however, is by creating a forward-compatible-only OpenGL Context when the application creates its window.
 
-Some popular libraries, like SDL in its version 1.2, do not include the ability to request the Operating System to create forward-compatible OpenGL profiles. The next major release of SDL (libsdl 2.0) will address this problem, however, some toolkits built on SDL 1.2 will not transition instantly to 2.0.
+Some popular libraries, like SDL in its version 1.2, do not include the ability to request the Operating System to create forward-compatible OpenGL profiles. The next major release of SDL (2.0) will address this problem, however, some toolkits built on SDL 1.2 may not transition instantly to 2.0.
 
-This project adds SDL 1.2 the ability to create OpenGL Core profiles under Mac OS X. The aim for the future is to add support for other platforms such as Windows and Linux (through GLX).
+This project adds SDL 1.2 the ability to create OpenGL Core profiles under Mac OS X. The aim for the future is to add support for other platforms such as Windows (though WGL) and Linux (through GLX).
 
 Configure on Mac OS X
 =====================
@@ -19,18 +19,19 @@ Modern Mac OS X versions do not ship with X, therefore you might want to configu
 
 In order to do this, first create a directory where the build files are to be created (for instance "build"), then cd into that directory and run configure with the following options:
 
+```
 ../configure --prefix=<build destination> --disable-video-x11 --disable-x11-shared --without-x
+```
 
 Build and Install
 =================
 
-Once configured, just type make && make install to install to your specified build destination.
-
+Once configured, just type ```make && make install``` to install to your specified build destination.
 
 Usage
 =====
 
-The new SDL_OPENGLCORE macro has been defined to create an OpenGL Core Profile context. The following program creates a window with a backing OpenGL Core Profile context, prints the OpenGL Version and quits:
+The new ```SDL_OPENGLCORE``` macro has been defined to create an OpenGL Core Profile Context. The following program creates a window with a backing OpenGL Core Profile context, prints the OpenGL Version and quits:
 
 ```
 #include <SDL.h>
@@ -41,7 +42,7 @@ int main(int argc, char* argv[])
 {
 	SDL_Init(SDL_INIT_VIDEO);
 
-	SDL_Surface* pSurface = SDL_SetVideoMode(600, 600, 32, SDL_DOUBLEBUF|SDL_OPENGL|SDL_OPENGLCORE);
+	SDL_Surface* pSurface = SDL_SetVideoMode(600, 600, 32, SDL_OPENGL|SDL_OPENGLCORE);
 
 	printf("GL Version:%s\n", glGetString(GL_VERSION));
 
