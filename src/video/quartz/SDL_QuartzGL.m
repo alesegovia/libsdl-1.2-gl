@@ -41,6 +41,11 @@
 #define NSOpenGLPFASamples ((NSOpenGLPixelFormatAttribute) 56)
 #endif
 
+#if (MAC_OS_X_VERSION_MAX_ALLOWED < 1070)
+#define NSOpenGLPFAOpenGLProfile ((NSOpenGLPixelFormatAttribute) 99)
+#define NSOpenGLProfileVersion3_2Core ((NSOpenGLPixelFormatAttribute) 12800)
+#endif
+
 #ifdef __powerpc__   /* we lost this in 10.6, which has no PPC support. */
 @implementation NSOpenGLContext (CGLContextAccess)
 - (CGLContextObj) cglContext;
@@ -130,14 +135,10 @@ int QZ_SetupOpenGL (_THIS, int bpp, Uint32 flags) {
     attr[i++] = NSOpenGLPFAScreenMask;
     attr[i++] = CGDisplayIDToOpenGLDisplayMask (display_id);
 
-#ifdef NSOpenGLPFAOpenGLProfile
     if ( flags & SDL_OPENGLCORE ) {
         attr[i++] = NSOpenGLPFAOpenGLProfile;
 	attr[i++] = NSOpenGLProfileVersion3_2Core;
     }
-#else
-    #warning Mac OS X SDK version too old to support OpenGL Core Profile, please update your SDK.
-#endif
 
     attr[i] = 0;
 
